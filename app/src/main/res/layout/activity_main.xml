@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.freeeeedom.multiple35.MainActivity">
+
+    <TextView
+        android:layout_width="@dimen/goal_frame"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:background="#EDC9FF"
+        android:text="x5"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/goal_frame"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:background="#FED4E7"
+        android:text="other" />
+
+    <TextView
+        android:layout_width="@dimen/goal_frame"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:background="#F2B79F"
+        android:text="x3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/goal_frame"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:background="#F2C26F"
+        android:text="x3 and x5" />
+
+
+    <TextView
+        android:layout_width="@dimen/goal_frame"
+        android:layout_height="@dimen/goal_frame"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:background="#EDC9FF"/>
+
+
+    <TextView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:background="#FFF45E"
+        android:text="数"/>
+
+</RelativeLayout>
