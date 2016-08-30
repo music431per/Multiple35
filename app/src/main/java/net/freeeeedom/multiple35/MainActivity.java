@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         }
         nextTurn();
 
-
     }
 
     // 5で割り切れたらtrue
