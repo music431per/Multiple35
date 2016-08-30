@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Multiple35</string>
+    <string name="start_bt_msg">スタート画面に戻る</string>
+    <string name="again_bt_msg">もう一度</string>
 </resources>

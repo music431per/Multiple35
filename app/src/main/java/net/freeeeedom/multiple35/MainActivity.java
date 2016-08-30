@@ -1,13 +1,20 @@
 package net.freeeeedom.multiple35;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,11 +32,18 @@ public class MainActivity extends AppCompatActivity {
     private TranslateAnimation mTranslateRight;
     private TranslateAnimation mTranslateButtom;
 
+    private Timer mTimer;
+    private Handler mHandler;
+
     private Random mRandom;
+    private Context context;
 
     private int number;
     private int point;
-    private int time;
+    private float time;
+    private float mLaptime;
+    private int baseTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +64,54 @@ public class MainActivity extends AppCompatActivity {
         mTranslateButtom = new TranslateAnimation(0, 0, 0, 1000);
         mTranslateButtom.setDuration(ANIMATION_VELOCITY);
 
+        mTimer = new Timer(true);
+        mHandler = new Handler();
 
         mRandom = new Random();
+        context = this;
 
+        reset();
 
         nextTurn();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // mHandlerを通じてUI Threadへ処理をキューイング
+                mHandler.post(new Runnable() {
+                    public void run() {
+
+                        //実行間隔分を加算処理
+                        mLaptime += 0.1d;
+
+
+                        time = baseTime - mLaptime;
+
+                        //計算にゆらぎがあるので小数点第1位で丸める
+                        BigDecimal bi = new BigDecimal(time);
+                        time = bi.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
+
+                        tvScore.setText("time : " + time + "\npoint : " + point);
+
+                        Log.d("time" + mLaptime, "baseTime" + baseTime);
+                        if (mLaptime >= baseTime) {
+                            mTimer.cancel();
+                            Intent intent = new Intent(context, EndActivity.class);
+                            intent.putExtra("score", point);
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    }
+                });
+            }
+        }, 100, 100);
 
     }
 
@@ -109,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         number = 0;
         point = 0;
         time = 0;
+        baseTime = 60;
     }
 
     private void createNumber() {
@@ -118,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
     private void nextTurn() {
         createNumber();
         tvNumber.setText(String.valueOf(number));
-        tvScore.setText("time : " + time + "\npoint : " + point);
     }
 
     private void decisionPoint(int i) {
@@ -127,24 +183,32 @@ public class MainActivity extends AppCompatActivity {
                 // other の処理
                 if (!check5() && !check3()) {
                     point++;
+                } else {
+                    baseTime = baseTime - 3;
                 }
                 break;
             case 2:
                 // x3 and x5 の処理
                 if (check5() && check3()) {
                     point++;
+                } else {
+                    baseTime = baseTime - 3;
                 }
                 break;
             case 3:
                 // x5 の処理
                 if (check5() && !check3()) {
                     point++;
+                } else {
+                    baseTime = baseTime - 3;
                 }
                 break;
             case 4:
                 // x3 の処理
                 if (!check5() && check3()) {
                     point++;
+                } else {
+                    baseTime = baseTime - 3;
                 }
                 break;
             default:
