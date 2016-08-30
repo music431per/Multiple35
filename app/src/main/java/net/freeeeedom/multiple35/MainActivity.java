@@ -1,25 +1,29 @@
 package net.freeeeedom.multiple35;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final int SWIPE_MIN_DISTANCE = 200;
+    private static final int SWIPE_MIN_DISTANCE = 180;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private static final int ANIMATION_VELOCITY = 300;
 
     private TextView tvNumber;
     private TextView tvScore;
 
     private GestureDetector mGestureDetector;
+    private TranslateAnimation mTranslateTop;
+    private TranslateAnimation mTranslateLeft;
+    private TranslateAnimation mTranslateRight;
+    private TranslateAnimation mTranslateButtom;
 
     private Random mRandom;
 
@@ -37,9 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
 
+        mTranslateLeft = new TranslateAnimation(0, -1000, 0, 0);
+        mTranslateLeft.setDuration(ANIMATION_VELOCITY);
+        mTranslateTop = new TranslateAnimation(0, 0, 0, -1000);
+        mTranslateTop.setDuration(ANIMATION_VELOCITY);
+        mTranslateRight = new TranslateAnimation(0, 1000, 0, 0);
+        mTranslateRight.setDuration(ANIMATION_VELOCITY);
+        mTranslateButtom = new TranslateAnimation(0, 0, 0, 1000);
+        mTranslateButtom.setDuration(ANIMATION_VELOCITY);
+
+
         mRandom = new Random();
 
+
         nextTurn();
+
 
     }
 
@@ -60,23 +76,24 @@ public class MainActivity extends AppCompatActivity {
 
                 if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     // 下から上
-//                    Toast.makeText(MainActivity.this, "下から上", Toast.LENGTH_SHORT).show();
                     decisionPoint(1);
+                    tvNumber.startAnimation(mTranslateTop); // アニメーション適用
+
 
                 } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     // 上から下
-//                    Toast.makeText(MainActivity.this, "上から下", Toast.LENGTH_SHORT).show();
                     decisionPoint(2);
+                    tvNumber.startAnimation(mTranslateButtom); // アニメーション適用
 
                 } else if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 右から左
-//                    Toast.makeText(MainActivity.this, "右から左", Toast.LENGTH_SHORT).show();
                     decisionPoint(3);
+                    tvNumber.startAnimation(mTranslateLeft); // アニメーション適用
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 左から右
-//                    Toast.makeText(MainActivity.this, "左から右", Toast.LENGTH_SHORT).show();
                     decisionPoint(4);
+                    tvNumber.startAnimation(mTranslateRight); // アニメーション適用
 
                 }
 

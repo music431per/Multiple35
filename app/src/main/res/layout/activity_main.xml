@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context="net.freeeeedom.multiple35.MainActivity">
 
+
     <TextView
         android:id="@+id/tv_score"
         android:layout_width="match_parent"
@@ -13,6 +14,15 @@
         android:layout_below="@+id/top_goal"
         android:gravity="center"
         android:text="time : 00:00\n point : 0" />
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:background="#FFF45E"
+        android:gravity="center"
+        android:text="数" />
 
     <TextView
         android:layout_width="@dimen/goal_frame"
@@ -54,16 +64,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="#EDC9FF" />
-
-
-    <TextView
-        android:id="@+id/tv_number"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_centerInParent="true"
-        android:background="#FFF45E"
-        android:gravity="center"
-        android:text="数" />
 
 
 </RelativeLayout>
