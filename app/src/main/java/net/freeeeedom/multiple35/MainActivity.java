@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     // 下から上
                     Toast.makeText(MainActivity.this, "下から上", Toast.LENGTH_SHORT).show();
 
-                }else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     // 上から下
                     Toast.makeText(MainActivity.this, "上から下", Toast.LENGTH_SHORT).show();
 
